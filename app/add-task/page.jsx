@@ -5,10 +5,33 @@ import { toast, ToastContainer } from "react-toastify";
 const AddTask = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.date.value);
-    const toTimestamp = new Date(e.target.date.value);
-    console.log(toTimestamp);
-    toast("Wow! It works");
+    const form = e.target;
+    const task = form.task.value;
+    const time = form.date.value;
+    const dateTime = new Date(time);
+    const toTimestamp = dateTime.getTime();
+
+    const taskData = {
+      user: "Shaquille",
+      task: task,
+      taskTime: toTimestamp,
+      completed: false,
+    };
+
+    fetch("http://localhost:5000/tasks", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(taskData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Task Added");
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div className="my-10 flex justify-center container mx-auto">
