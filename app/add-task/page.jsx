@@ -13,6 +13,7 @@ const AddTask = () => {
 
     const taskData = {
       user: "Shaquille",
+      email: "shakil.m.19@gmail.com",
       task: task,
       taskTime: toTimestamp,
       completed: false,
@@ -35,7 +36,7 @@ const AddTask = () => {
   };
   return (
     <div className="my-10 flex justify-center container mx-auto">
-      <div className="w-1/3 shadow-2xl p-10 rounded-lg">
+      <div className="w-11/12 md:w-1/2 lg:w-1/3 shadow-2xl p-10 rounded-lg">
         <h2 className="mb-5 text-center text-4xl font-bold">Add Task</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-5">
