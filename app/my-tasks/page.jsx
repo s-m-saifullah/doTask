@@ -11,7 +11,7 @@ const MyTasks = () => {
   //   Load incomplete tasks
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/tasks?q=incomplete")
+    fetch("https://do-task-server.vercel.app/tasks?q=incomplete")
       .then((res) => res.json())
       .then((data) => {
         setMyTasks(data);
@@ -31,7 +31,7 @@ const MyTasks = () => {
       const remainingTasks = myTasks.filter((task) => task._id !== id);
       setMyTasks(remainingTasks);
 
-      fetch(`http://localhost:5000/tasks/${id}`, {
+      fetch(`https://do-task-server.vercel.app/tasks/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -51,7 +51,7 @@ const MyTasks = () => {
       const remainingTasks = myTasks.filter((task) => task._id !== id);
       setMyTasks(remainingTasks);
 
-      fetch(`http://localhost:5000/tasks/${id}?completed=true`, {
+      fetch(`https://do-task-server.vercel.app/tasks/${id}?completed=true`, {
         method: "PATCH",
       })
         .then((res) => res.json())

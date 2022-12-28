@@ -11,7 +11,7 @@ const CompletedTasks = () => {
   //   Load completed tasks
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/tasks?q=completed")
+    fetch("https://do-task-server.vercel.app/tasks?q=completed")
       .then((res) => res.json())
       .then((data) => {
         setCompletedTask(data);
@@ -34,7 +34,7 @@ const CompletedTasks = () => {
       setCompletedTask(remainingCompletedTasks);
     }
 
-    fetch(`http://localhost:5000/tasks/${id}?completed=false`, {
+    fetch(`https://do-task-server.vercel.app/tasks/${id}?completed=false`, {
       method: "PATCH",
     })
       .then((res) => res.json())
