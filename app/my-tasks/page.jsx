@@ -6,15 +6,21 @@ import Task from "./Task";
 
 const MyTasks = () => {
   const [myTasks, setMyTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  //   Load all tasks
+  //   Load incomplete tasks
   useEffect(() => {
+    setLoading(true);
     fetch("http://localhost:5000/tasks?q=incomplete")
       .then((res) => res.json())
       .then((data) => {
         setMyTasks(data);
+        setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   }, []);
 
   // Delete a task
@@ -62,7 +68,9 @@ const MyTasks = () => {
       <div className="w-11/12 md:w-1/2 shadow-2xl p-10 rounded-lg">
         <h2 className="mb-5 text-center text-4xl font-bold">My Tasks</h2>
         <div>
-          {myTasks.length === 0 ? (
+          {loading ? (
+            <p>Loading...</p>
+          ) : myTasks.length === 0 ? (
             <h3 className="text-center text-lg">
               No Task Found.{" "}
               <Link className="text-sky-700" href="/add-task">
