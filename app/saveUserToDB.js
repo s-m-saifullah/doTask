@@ -14,6 +14,8 @@ export const saveUser = (name, email, image) => {
       console.log(data);
       if (data.acknowledged) {
         toast.success("Registration Successful");
+      } else if (data.userExist) {
+        toast.success(data.message);
       }
     });
 };

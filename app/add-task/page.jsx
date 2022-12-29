@@ -1,8 +1,20 @@
 "use client";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const AddTask = () => {
+  const { user, loading } = useContext(AuthContext);
+  const router = useRouter();
+
+  if (loading) {
+    return <h3>Loading...</h3>;
+  }
+
+  if (!user) {
+    return router.push("/");
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;

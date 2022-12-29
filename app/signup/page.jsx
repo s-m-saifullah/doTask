@@ -6,6 +6,7 @@ import { saveUser } from "../saveUserToDB";
 import GoogleIcon from "../../assets/google.png";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import Link from "next/link";
 const Signup = () => {
   const [registrationError, setRegistrationError] = useState("");
   const { loading, setLoading, createUser, signInWithGoogle, updateUser } =
@@ -39,7 +40,7 @@ const Signup = () => {
               .then(() => {
                 saveUser(newUser.displayName, newUser.email, uploadedImg);
                 setLoading(false);
-                router.push("/my-tasks");
+                router.push("/add-task");
               })
               .catch((err) => {
                 console.log(err);
@@ -66,7 +67,7 @@ const Signup = () => {
         const newUser = result.user;
         saveUser(newUser.displayName, newUser.email, newUser.photoURL);
         setLoading(false);
-        router.push("/my-tasks");
+        router.push("/add-task");
       })
       .catch((err) => {
         console.log(err);
@@ -135,6 +136,12 @@ const Signup = () => {
           >
             SIGN UP
           </button>
+          <p className="mt-3">
+            Already have an account.{" "}
+            <Link href="/" className="text-sky-600">
+              Login here
+            </Link>
+          </p>
         </form>
         <p className="text-center py-3">OR</p>
         <button

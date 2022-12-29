@@ -18,13 +18,13 @@ export default function RootLayout({ children }) {
         head.jsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <Head />
-      <body className={nunito.className}>
-        <ToastContainer />
-        <AuthProvider>
+      <AuthProvider>
+        <body className={nunito.className}>
+          <ToastContainer />
           <Header />
           {children}
-        </AuthProvider>
-      </body>
+        </body>
+      </AuthProvider>
     </html>
   );
 }

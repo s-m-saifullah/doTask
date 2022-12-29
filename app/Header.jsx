@@ -42,7 +42,7 @@ const Header = () => {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                    <Link href="/my-tasks">
+                    <Link href="/">
                       <Image
                         className="block h-8 w-auto lg:hidden"
                         src={Logo}
@@ -51,7 +51,7 @@ const Header = () => {
                         height="100"
                       />
                     </Link>
-                    <Link href="/my-tasks">
+                    <Link href="/">
                       <Image
                         className="hidden h-8 w-auto lg:block"
                         src={Logo}
@@ -144,15 +144,16 @@ const Header = () => {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
+                            <Link
                               href="#"
+                              onClick={logout}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Sign out
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                       </Menu.Items>

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../contexts/AuthProvider";
@@ -7,23 +8,32 @@ import Task from "./Task";
 
 const MyTasks = () => {
   const [myTasks, setMyTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useContext(AuthContext);
+  const [loadingData, setLoadingData] = useState(true);
+  const { user, loading } = useContext(AuthContext);
+  const router = useRouter();
 
   //   Load incomplete tasks
   useEffect(() => {
-    setLoading(true);
+    setLoadingData(true);
     fetch("https://do-task-server.vercel.app/tasks?q=incomplete")
       .then((res) => res.json())
       .then((data) => {
         setMyTasks(data);
-        setLoading(false);
+        setLoadingData(false);
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
+        setLoadingData(false);
       });
   }, []);
+
+  if (loading) {
+    return <h3>Loading...</h3>;
+  }
+
+  if (!user) {
+    return router.push("/");
+  }
 
   // Delete a task
   const handleDelete = (id) => {
@@ -70,7 +80,7 @@ const MyTasks = () => {
       <div className="w-full md:w-1/2 lg:w-1/3 shadow-2xl mx-2 p-5 md:p-10 rounded-lg">
         <h2 className="mb-5 text-center text-4xl font-bold">My Tasks</h2>
         <div>
-          {loading ? (
+          {loadingData ? (
             <p>Loading...</p>
           ) : myTasks.length === 0 ? (
             <h3 className="text-center text-lg">
