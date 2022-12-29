@@ -5,13 +5,13 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { saveUser } from "../saveUserToDB";
 import GoogleIcon from "../../assets/google.png";
 import Image from "next/image";
-import { toast } from "react-toastify";
 import Link from "next/link";
 const Signup = () => {
   const [registrationError, setRegistrationError] = useState("");
-  const { loading, setLoading, createUser, signInWithGoogle, updateUser } =
+  const { setLoading, createUser, signInWithGoogle, updateUser } =
     useContext(AuthContext);
   const router = useRouter();
+
   const handleSignup = (e) => {
     e.preventDefault();
 
