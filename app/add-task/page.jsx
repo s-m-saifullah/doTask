@@ -24,8 +24,8 @@ const AddTask = () => {
     const toTimestamp = dateTime.getTime();
 
     const taskData = {
-      user: "Shaquille",
-      email: "shakil.m.19@gmail.com",
+      user: user.displayName,
+      email: user.email,
       task: task,
       taskTime: toTimestamp,
       completed: false,

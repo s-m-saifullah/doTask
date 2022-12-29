@@ -15,7 +15,9 @@ const MyTasks = () => {
   //   Load incomplete tasks
   useEffect(() => {
     setLoadingData(true);
-    fetch("https://do-task-server.vercel.app/tasks?q=incomplete")
+    fetch(
+      `https://do-task-server.vercel.app/tasks?q=incomplete&email=${user?.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setMyTasks(data);
@@ -25,7 +27,7 @@ const MyTasks = () => {
         console.log(err);
         setLoadingData(false);
       });
-  }, []);
+  }, [user?.email]);
 
   if (loading) {
     return <h3>Loading...</h3>;
