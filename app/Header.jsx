@@ -3,14 +3,16 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import Logo from "../assets/logo.png";
+import { AuthContext } from "./contexts/AuthProvider";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Add Task", href: "/add-task", current: false },
   { name: "My Tasks", href: "/my-tasks", current: false },
   { name: "Completed Tasks", href: "/completed-tasks", current: false },
+  { name: "Sign Up", href: "/signup", current: false },
 ];
 
 function classNames(...classes) {
@@ -18,6 +20,8 @@ function classNames(...classes) {
 }
 
 const Header = () => {
+  const { user, logout } = useContext(AuthContext);
+  console.log(user);
   return (
     <header>
       <Disclosure as="nav" className="bg-gray-800">
@@ -38,20 +42,24 @@ const Header = () => {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                    <Image
-                      className="block h-8 w-auto lg:hidden"
-                      src={Logo}
-                      alt="Your Company"
-                      width="100"
-                      height="100"
-                    />
-                    <Image
-                      className="hidden h-8 w-auto lg:block"
-                      src={Logo}
-                      alt="Your Company"
-                      width="100"
-                      height="100"
-                    />
+                    <Link href="/my-tasks">
+                      <Image
+                        className="block h-8 w-auto lg:hidden"
+                        src={Logo}
+                        alt="Your Company"
+                        width="100"
+                        height="100"
+                      />
+                    </Link>
+                    <Link href="/my-tasks">
+                      <Image
+                        className="hidden h-8 w-auto lg:block"
+                        src={Logo}
+                        alt="Your Company"
+                        width="100"
+                        height="100"
+                      />
+                    </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
@@ -74,26 +82,28 @@ const Header = () => {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
+                  {/* <button
                     type="button"
                     className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  </button> */}
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
-                        <Image
-                          className="h-8 w-8 rounded-full"
-                          src=""
-                          alt=""
-                          width="100"
-                          height="100"
-                        />
+                        {user?.uid ? (
+                          <Image
+                            className="h-8 w-8 rounded-full"
+                            src={user.photoURL}
+                            alt=""
+                            width="100"
+                            height="100"
+                          />
+                        ) : null}
                       </Menu.Button>
                     </div>
                     <Transition

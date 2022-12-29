@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import CompletedTask from "./CompletedTask";
 
 const CompletedTasks = () => {
@@ -47,7 +47,7 @@ const CompletedTasks = () => {
 
   return (
     <div className="my-10 flex justify-center container mx-auto">
-      <div className="w-11/12 md:w-1/2 shadow-2xl p-10 rounded-lg">
+      <div className="w-full md:w-1/2 lg:w-1/3 shadow-2xl mx-2 p-5 md:p-10 rounded-lg">
         <h2 className="mb-5 text-center text-4xl font-bold">Completed Tasks</h2>
         <div>
           {loading ? (
@@ -71,7 +71,6 @@ const CompletedTasks = () => {
           )}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

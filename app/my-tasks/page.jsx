@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { AuthContext } from "../contexts/AuthProvider";
 import Task from "./Task";
 
 const MyTasks = () => {
   const [myTasks, setMyTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
 
   //   Load incomplete tasks
   useEffect(() => {
@@ -65,7 +67,7 @@ const MyTasks = () => {
 
   return (
     <div className="my-10 flex justify-center container mx-auto">
-      <div className="w-11/12 md:w-1/2 shadow-2xl p-10 rounded-lg">
+      <div className="w-full md:w-1/2 lg:w-1/3 shadow-2xl mx-2 p-5 md:p-10 rounded-lg">
         <h2 className="mb-5 text-center text-4xl font-bold">My Tasks</h2>
         <div>
           {loading ? (
@@ -90,7 +92,6 @@ const MyTasks = () => {
           )}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

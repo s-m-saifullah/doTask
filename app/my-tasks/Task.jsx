@@ -43,7 +43,7 @@ const Task = ({ sl, singleTask, handleMarkComplete, handleDelete }) => {
     }
   };
 
-  const { _id, task } = singleTask;
+  const { _id } = singleTask;
 
   return (
     <div
@@ -55,7 +55,7 @@ const Task = ({ sl, singleTask, handleMarkComplete, handleDelete }) => {
         <span className="mr-1 py-1"> {sl}. </span>
         <form
           onSubmit={(e) => handleEdit(e, _id)}
-          className="w-full flex justify-between"
+          className="w-full flex justify-between gap-1"
         >
           <input
             ref={inputRef}
@@ -64,7 +64,7 @@ const Task = ({ sl, singleTask, handleMarkComplete, handleDelete }) => {
             type="text"
             defaultValue={localTask}
           />
-          <div className="flex gap-3">
+          <div className="flex gap-1 md:gap-3">
             <button
               type="submit"
               className="py-1 px-2 rounded bg-green-500 text-white"
@@ -82,9 +82,9 @@ const Task = ({ sl, singleTask, handleMarkComplete, handleDelete }) => {
       </div>
       <div className={`${editMode ? "hidden" : "flex justify-between w-full"}`}>
         <p>
-          {sl}. {localTask}
+          <span>{sl}.</span> <span>{localTask}</span>
         </p>
-        <div className="flex gap-3">
+        <div className="flex gap-1 md:gap-3">
           <div
             onClick={() => handleMarkComplete(_id)}
             className="w-6 cursor-pointer"
