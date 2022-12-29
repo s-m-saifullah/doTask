@@ -22,6 +22,51 @@ function classNames(...classes) {
 const Header = () => {
   const { user, logout } = useContext(AuthContext);
   console.log(user);
+
+  const menuItem = (
+    <>
+      <Link
+        href="/"
+        className="text-gray-300 hover:bg-gray-700 hover:text-white
+        px-3 py-2 rounded-md text-sm font-medium"
+      >
+        Home
+      </Link>
+      {user?.uid ? (
+        <>
+          <Link
+            href="/add-task"
+            className="text-gray-300 hover:bg-gray-700 hover:text-white
+  px-3 py-2 rounded-md text-sm font-medium"
+          >
+            Add Task
+          </Link>
+          <Link
+            href="/my-tasks"
+            className="text-gray-300 hover:bg-gray-700 hover:text-white
+  px-3 py-2 rounded-md text-sm font-medium"
+          >
+            My Tasks
+          </Link>
+          <Link
+            href="/completed-tasks"
+            className="text-gray-300 hover:bg-gray-700 hover:text-white
+  px-3 py-2 rounded-md text-sm font-medium"
+          >
+            Completed Tasks
+          </Link>
+        </>
+      ) : (
+        <Link
+          href="/signup"
+          className="text-gray-300 hover:bg-gray-700 hover:text-white
+  px-3 py-2 rounded-md text-sm font-medium"
+        >
+          Sign Up
+        </Link>
+      )}
+    </>
+  );
   return (
     <header>
       <Disclosure as="nav" className="bg-gray-800">
@@ -62,23 +107,7 @@ const Header = () => {
                     </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
-                    <div className="flex space-x-4">
-                      {navigation.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "px-3 py-2 rounded-md text-sm font-medium"
-                          )}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
+                    <div className="flex space-x-4">{menuItem}</div>
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -164,23 +193,8 @@ const Header = () => {
             </div>
 
             <Disclosure.Panel className="sm:hidden">
-              <div className="space-y-1 px-2 pt-2 pb-3">
-                {navigation.map((item) => (
-                  <Disclosure.Button
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "block px-3 py-2 rounded-md text-base font-medium"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    {item.name}
-                  </Disclosure.Button>
-                ))}
+              <div className="flex flex-col space-y-1 px-2 pt-2 pb-3">
+                {menuItem}
               </div>
             </Disclosure.Panel>
           </>
