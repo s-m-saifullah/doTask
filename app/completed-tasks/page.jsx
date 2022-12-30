@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../contexts/AuthProvider";
+import Spinner from "../Spinner";
 import CompletedTask from "./CompletedTask";
 
 const CompletedTasks = () => {
@@ -30,7 +31,11 @@ const CompletedTasks = () => {
   }, [user?.email]);
 
   if (loadingData) {
-    return <h3>Loading...</h3>;
+    return (
+      <div className="min-h-[90vh] grid place-items-center">
+        <Spinner />
+      </div>
+    );
   }
 
   if (!user) {
@@ -65,7 +70,7 @@ const CompletedTasks = () => {
         <h2 className="mb-5 text-center text-4xl font-bold">Completed Tasks</h2>
         <div>
           {loadingData ? (
-            <p>Loading...</p>
+            <Spinner />
           ) : completedTasks.length === 0 ? (
             <h3 className="text-center text-lg">
               No Completed Task Found.{" "}

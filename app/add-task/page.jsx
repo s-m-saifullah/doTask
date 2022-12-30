@@ -3,13 +3,18 @@ import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../contexts/AuthProvider";
+import Spinner from "../Spinner";
 
 const AddTask = () => {
   const { user, loading } = useContext(AuthContext);
   const router = useRouter();
 
   if (loading) {
-    return <h3>Loading...</h3>;
+    return (
+      <div className="min-h-[90vh] grid place-items-center">
+        <Spinner />
+      </div>
+    );
   }
 
   if (!user) {
