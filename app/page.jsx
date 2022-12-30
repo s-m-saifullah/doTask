@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 
 const Home = () => {
-  const [registrationError, setRegistrationError] = useState("");
+  const [loginError, setLoginError] = useState("");
   const { user, loading, setLoading, login, signInWithGoogle } =
     useContext(AuthContext);
 
@@ -22,6 +22,7 @@ const Home = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
+    setLoginError("");
 
     const form = e.target;
     const email = form.email.value;
@@ -36,12 +37,13 @@ const Home = () => {
       })
       .catch((err) => {
         console.log(err);
-        setRegistrationError(err.message);
+        setLoginError(err.message);
         setLoading(false);
       });
   };
 
   const handleGoogleSignIn = () => {
+    setLoginError("");
     signInWithGoogle()
       .then((result) => {
         const newUser = result.user;
@@ -51,7 +53,7 @@ const Home = () => {
       })
       .catch((err) => {
         console.log(err);
-        setRegistrationError(err.message);
+        setLoginError(err.message);
         setLoading(false);
       });
   };
@@ -86,12 +88,26 @@ const Home = () => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-emerald-800 py-2 px-3 rounded text-white"
-          >
-            LOGIN
-          </button>
+          {loading ? (
+            <button
+              type="submit"
+              disabled
+              className="w-full bg-gray-500 py-2 px-3 rounded text-white"
+            >
+              LOGIN
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-emerald-800 py-2 px-3 rounded text-white"
+            >
+              LOGIN
+            </button>
+          )}
+
+          {loginError ? (
+            <p className="text-red-500 my-3">{loginError}</p>
+          ) : null}
           <p className="mt-3">
             Don't have an account.{" "}
             <Link href="/signup" className="text-sky-600">
@@ -100,19 +116,35 @@ const Home = () => {
           </p>
         </form>
         <p className="text-center py-3">OR</p>
-        <button
-          onClick={handleGoogleSignIn}
-          className="w-full bg-white py-2 px-3 rounded border-2"
-        >
-          <Image
-            src={GoogleIcon}
-            width="25"
-            height="25"
-            alt="Google Icon"
-            className="inline mr-2"
-          />
-          Continue With Google
-        </button>
+        {loading ? (
+          <button
+            disabled
+            className="w-full bg-gray-500 text-white py-2 px-3 rounded border-2"
+          >
+            <Image
+              src={GoogleIcon}
+              width="25"
+              height="25"
+              alt="Google Icon"
+              className="inline mr-2"
+            />
+            Continue With Google
+          </button>
+        ) : (
+          <button
+            onClick={handleGoogleSignIn}
+            className="w-full bg-white py-2 px-3 rounded border-2"
+          >
+            <Image
+              src={GoogleIcon}
+              width="25"
+              height="25"
+              alt="Google Icon"
+              className="inline mr-2"
+            />
+            Continue With Google
+          </button>
+        )}
       </div>
     </div>
   );

@@ -8,12 +8,13 @@ import Image from "next/image";
 import Link from "next/link";
 const Signup = () => {
   const [registrationError, setRegistrationError] = useState("");
-  const { setLoading, createUser, signInWithGoogle, updateUser } =
+  const { loading, setLoading, createUser, signInWithGoogle, updateUser } =
     useContext(AuthContext);
   const router = useRouter();
 
   const handleSignup = (e) => {
     e.preventDefault();
+    setRegistrationError("");
 
     const form = e.target;
     const name = form.name.value;
@@ -62,6 +63,7 @@ const Signup = () => {
   };
 
   const handleGoogleSignIn = () => {
+    setRegistrationError("");
     signInWithGoogle()
       .then((result) => {
         const newUser = result.user;
@@ -90,6 +92,7 @@ const Signup = () => {
               id="name"
               type="text"
               name="name"
+              required
               className="border-2 w-full rounded-md text-lg px-2 py-1"
             />
           </div>
@@ -102,6 +105,7 @@ const Signup = () => {
               type="email"
               name="email"
               id="email"
+              required
               className="border-2 w-full rounded-md text-lg px-2 py-1"
             />
           </div>
@@ -114,6 +118,7 @@ const Signup = () => {
               type="password"
               name="password"
               id="password"
+              required
               className="border-2 w-full rounded-md text-lg px-2 py-1"
             />
           </div>
@@ -126,16 +131,31 @@ const Signup = () => {
               type="file"
               name="photo"
               id="photo"
+              required
               className="border-2 w-full rounded-md text-lg px-2 py-1"
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-emerald-800 py-2 px-3 rounded text-white"
-          >
-            SIGN UP
-          </button>
+          {loading ? (
+            <button
+              type="submit"
+              disabled
+              className="w-full bg-gray-500 py-2 px-3 rounded text-white"
+            >
+              SIGN UP
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-emerald-800 py-2 px-3 rounded text-white"
+            >
+              SIGN UP
+            </button>
+          )}
+
+          {registrationError ? (
+            <p className="text-red-500 my-3">{registrationError}</p>
+          ) : null}
           <p className="mt-3">
             Already have an account.{" "}
             <Link href="/" className="text-sky-600">
@@ -144,19 +164,36 @@ const Signup = () => {
           </p>
         </form>
         <p className="text-center py-3">OR</p>
-        <button
-          onClick={handleGoogleSignIn}
-          className="w-full bg-white py-2 px-3 rounded border-2"
-        >
-          <Image
-            src={GoogleIcon}
-            width="25"
-            height="25"
-            alt="Google Icon"
-            className="inline mr-2"
-          />
-          Continue With Google
-        </button>
+
+        {loading ? (
+          <button
+            disabled
+            className="w-full bg-gray-500 text-white py-2 px-3 rounded border-2"
+          >
+            <Image
+              src={GoogleIcon}
+              width="25"
+              height="25"
+              alt="Google Icon"
+              className="inline mr-2"
+            />
+            Continue With Google
+          </button>
+        ) : (
+          <button
+            onClick={handleGoogleSignIn}
+            className="w-full bg-white py-2 px-3 rounded border-2"
+          >
+            <Image
+              src={GoogleIcon}
+              width="25"
+              height="25"
+              alt="Google Icon"
+              className="inline mr-2"
+            />
+            Continue With Google
+          </button>
+        )}
       </div>
     </div>
   );
